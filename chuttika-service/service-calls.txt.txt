@@ -1,0 +1,12 @@
+ http://localhost:8080/chuttika/rawmaterials/addRawMaterialCategory
+ {   
+ 	"name":"Wood",
+ 	"description":"Raw Wood"
+}
+http://localhost:8080/chuttika/rawmaterials/addRawMaterialSubCategory
+{   
+ 	"name":"Teak",
+ 	 "description":"Nilamboor Teak",
+ 	 "price":500,
+ 	 "category":{"id":1}
+ }

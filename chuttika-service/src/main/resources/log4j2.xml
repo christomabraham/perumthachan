@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+			Perumthachan LOG %d{yyyy-MM-dd HH:mm:ss} %5p ${hostName} --- [%10.15t]
+			%-10.40c{1.} : %m%ex
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<RollingFile name="FileAppender" fileName="logs/Kabani.log"
+			filePattern="logs/Perumthachan-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<!-- <SizeBasedTriggeringPolicy size="10MB" />-->
+				<TimeBasedTriggeringPolicy interval="1" /><!-- ONE Day Log -->
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="ConsoleAppender" />
+			 <!-- <AppenderRef ref="FileAppender"/>-->
+		</Root>
+	</Loggers>
+</Configuration>
