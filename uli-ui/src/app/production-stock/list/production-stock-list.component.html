@@ -1,0 +1,49 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">Production</h4>
+            <span class="category">Job Orders</span>
+            <span class="category pull-right buttonStyle" (click)="addNewJobOrder()"> Add + </span>
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th class="text-danger">OrderNumber</th>
+                  <th>Item Name</th>
+                  <th>Wood Type</th>
+                  <th >Client Name</th>
+                  <th>Contact No</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of jobOrders;let i=index;">
+                  <td>{{i+1}}</td>
+                  <td class="text-danger">{{order.orderNumber}}</td>
+                  <td >{{order.itemName}}</td>
+                  <td>{{order.woodType}}</td>
+                  <td>{{order.clientName}}</td>
+                  <td>{{order.clientMobile}}</td>
+                  <td>{{order.quantity}}</td>
+                  <td>{{order.orderStatus}}</td>
+                  <td>
+                    <i class="material-icons" style="padding:5px" (click)="editOrder(order)">edit</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

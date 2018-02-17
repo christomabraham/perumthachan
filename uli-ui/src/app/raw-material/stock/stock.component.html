@@ -1,0 +1,116 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header" data-background-color="red">
+      <h4 class="title">Raw Material Stock</h4>
+      <span class="category">Stock</span>
+      <span class="category">Filter By Category
+        <select [ngModelOptions]="{standalone: true}" style="width:17%;background-color:grey;" [(ngModel)]="filterCategory">
+          <ng-container *ngFor="let cat of basicCategories">
+            <option [value]="cat.id">{{cat.name}}</option>
+          </ng-container>
+        </select>
+      </span>
+      <span class="category pull-right buttonStyle" (click)="addStockItem(template)"> Add + </span>
+    </div>
+    <div class="card-content table-responsive">
+      <table class="table table-hover ">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Category</th>
+            <th>Length</th>
+            <th>Breadth</th>
+            <th>Thickness</th>
+            <th>Quantity</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stock of stockItems| filter : filterCategory;let i=index;" [ngClass]="stock.quantity<=0?'text-danger':''">
+            <td>{{i+1}}</td>
+            <td>{{stock?.subcategory?.name}}</td>
+            <td>{{stock.length}}</td>
+            <td>{{stock.width}}</td>
+            <td>{{stock.thickness}}</td>
+            <td>{{stock.quantity}}</td>
+            <td>
+              <i class="material-icons" style="padding:5px" (click)="editElement(stock,template)">edit</i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<ng-template #template>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header" data-background-color="red">
+        <h4 class="title">Add/Edit Stock Item</h4>
+        <p class="category">Enter details of Stock Item</p>
+      </div>
+      <div class="card-content">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group form-black required">
+                <label class="control-label">Category</label>
+                <select style="width:100%;background-color:grey;" (change)="getSubCategories($event)" [(ngModel)]="stockElement.categoryid" [ngModelOptions]="{standalone: true}">
+                  <ng-container *ngFor="let category of basicCategories">
+                    <option *ngIf="stockElement.categoryId==category.id" selected [value]="category.id">{{category.name}}</option>
+                    <option *ngIf="stockElement.categoryId!=category.id" [value]="category.id">{{category.name}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-black required">
+                <label class="control-label">Sub Category</label>
+                <select style="width:100%;background-color:grey;" [(ngModel)]="stockElement.subcategory.id" [ngModelOptions]="{standalone: true}">
+                  <ng-container *ngFor="let category of subCategories">
+                    <option *ngIf="stockElement.subcategory.id==category.id" selected [value]="category.id">{{category.name}}</option>
+                    <option *ngIf="stockElement.subcategory.id!=category.id" [value]="category.id">{{category.name}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" disabled="">
+            <div class="col-md-4">
+              <div class="form-group form-black required">
+                <label class="control-label">Length (In Feet)</label>
+                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="stockElement.length" required="required">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group form-black required">
+                <label class="control-label">Width (In Inches)</label>
+                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="stockElement.width" required="required">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group form-black required">
+                <label class="control-label">Thickness (In Inches)</label>
+                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="stockElement.thickness" required="required">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group form-black  ">
+                <label class="control-label">Quantity</label>
+                <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="stockElement.quantity" required="required">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-danger pull-left" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-danger pull-right" (click)="saveNewStock()" [disabled]="disabled()">Save</button>
+          <div class="clearfix"></div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
