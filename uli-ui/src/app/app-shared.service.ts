@@ -44,7 +44,7 @@ export class AppSharedService {
     return [{ "type": "Order Created" }, { "type": "In-Progress Carpentry" }, { "type": "In-Progress Painting" }, { "type": "In-Progress Upholstry" }, { "type": "Completed" }, { "type": "Delivered" }]
   }
 
-  defaultJobOrder: any = { "id": "", "orderNumber": "", "itemName": "", "quantity": "", "description": "", "woodType": "", "orderDate": "", "deliveryDate": "", "expectedCost": "", "advancePaid": "", "clientName": "", "clientMobile": "", "clientAddress": "", "comments": "", "orderStatus": "", "createdDate": "", "modofiedDate": "", "payments": [] };
+  defaultJobOrder: any = { "id": "", "orderNumber": "", "itemName": "", "quantity": "", "description": "", "woodType": "", "orderDate": "", "deliveryDate": "", "expectedCost": "", "advancePaid": "", "clientName": "", "clientMobile": "", "clientAddress": "", "comments": "", "orderStatus": "", "createdDate": "", "modofiedDate": "", "payments": [], "productionStock": [],"labours":[] };
   selectedJobOrder: any = null;
   public setSelectedJobOrder(jobOrder: any) {
     this.selectedJobOrder = jobOrder;

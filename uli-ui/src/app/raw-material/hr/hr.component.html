@@ -67,7 +67,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-black required">
                                 <label class="control-label">Specialization</label>
-                                <select [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;" [(ngModel)]="hrElement.specialization">
+                                <select class="dropDown" [ngModelOptions]="{standalone: true}" [(ngModel)]="hrElement.specialization">
                                     <ng-container *ngFor="let specialization of avaliableSpecialization">
                                         <option *ngIf="hrElement.specialization==specialization.type" selected [value]="specialization.type">{{specialization.type}}</option>
                                         <option *ngIf="hrElement.specialization!=specialization.type" [value]="specialization.type">{{specialization.type}}</option>

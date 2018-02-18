@@ -1,5 +1,6 @@
 package com.perumthachan.chuttika.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.perumthachan.chuttika.components.JobOrderComponent;
-import com.perumthachan.chuttika.entities.JobOrder;;
+import com.perumthachan.chuttika.entities.JobOrder;
+import com.perumthachan.chuttika.entities.ProductionLabour;
+import com.perumthachan.chuttika.entities.ProductionStock;
+import com.perumthachan.chuttika.entities.Stock;
+import com.perumthachan.chuttika.repositories.StockRepository;;
 
 @CrossOrigin
 @Controller
@@ -24,6 +29,9 @@ public class JobOrderController {
 
 	@Autowired
 	private JobOrderComponent jobOrderService;
+
+	@Autowired
+	private StockRepository stockRepo;
 
 	@RequestMapping(value = "/getAllJobOrders", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<JobOrder> getAllJobOrders() throws Exception {
@@ -36,11 +44,20 @@ public class JobOrderController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/saveJobOrder", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody boolean saveJobOrder(@RequestBody JobOrder data) throws Exception {
 		try {
-			return jobOrderService.saveJobOrder(data)!=null?true:false;
+			for (ProductionStock stock : data.getProductionStock()) {
+				if (stock.getProductionStockId() == 0) {
+					Stock temp = stockRepo.getStock(Integer.parseInt(stock.getStockId()));
+					temp.setQuantity(temp.getQuantity() - Integer.parseInt(stock.getRequirement()));
+					temp.setUpdatedDate(new Date());
+					stockRepo.save(temp);
+				}
+			}
+			
+			return jobOrderService.saveJobOrder(data) != null ? true : false;
 		} catch (Exception e) {
 			logger.error("****Exception in saveJobOrder() " + e.getMessage());
 			throw e;

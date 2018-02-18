@@ -16,23 +16,21 @@ import com.perumthachan.chuttika.repositories.RawMaterialSubCategoryRepository;
 import com.perumthachan.chuttika.repositories.RawMaterialSupplierRepository;
 import com.perumthachan.chuttika.repositories.StockRepository;
 
-
-
 @Component
 public class RawMaterialComponent {
-	
+
 	@Autowired
 	private RawMaterialCategoryRepository rawMaterialCategoryRepository;
-	
+
 	@Autowired
 	private RawMaterialSubCategoryRepository rawMaterialSubCategoryRepository;
-	
+
 	@Autowired
 	private RawMaterialSupplierRepository rawMaterialSupplierRepository;
-	
+
 	@Autowired
 	private StockRepository stockRepository;
-	
+
 	@Autowired
 	private HrRepository hrRepository;
 
@@ -51,7 +49,7 @@ public class RawMaterialComponent {
 			throw e;
 		}
 	}
-	
+
 	public List<RawMaterialSubCategory> getRawMaterialSubCategories() throws Exception {
 		try {
 			return rawMaterialSubCategoryRepository.findAll();
@@ -59,7 +57,7 @@ public class RawMaterialComponent {
 			throw e;
 		}
 	}
-	
+
 	public List<RawMaterialSubCategory> getSpecificRawMaterialSubCategories(int categoryId) throws Exception {
 		try {
 			return rawMaterialSubCategoryRepository.findByCategoryId(categoryId);
@@ -68,14 +66,15 @@ public class RawMaterialComponent {
 		}
 	}
 
-	public RawMaterialSubCategory addRawMaterialSubCategory(RawMaterialSubCategory rawMaterialSubCategory) throws Exception {
+	public RawMaterialSubCategory addRawMaterialSubCategory(RawMaterialSubCategory rawMaterialSubCategory)
+			throws Exception {
 		try {
 			return rawMaterialSubCategoryRepository.save(rawMaterialSubCategory);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 	public RawMaterialSupplier addRawMaterialSupplier(RawMaterialSupplier rawMaterialSupplier) throws Exception {
 		try {
 			return rawMaterialSupplierRepository.save(rawMaterialSupplier);
@@ -83,7 +82,7 @@ public class RawMaterialComponent {
 			throw e;
 		}
 	}
-	
+
 	public List<Stock> getStockList() throws Exception {
 		try {
 			return stockRepository.findAll();
@@ -99,6 +98,7 @@ public class RawMaterialComponent {
 			throw e;
 		}
 	}
+
 	public List<HrResource> getHRList() throws Exception {
 		try {
 			return hrRepository.findAll();
@@ -114,6 +114,7 @@ public class RawMaterialComponent {
 			throw e;
 		}
 	}
+
 	public List<Stock> getCatagorizedStock(int subCategoryId) throws Exception {
 		try {
 			return stockRepository.getCategorizedStock(subCategoryId);
@@ -121,4 +122,13 @@ public class RawMaterialComponent {
 			throw e;
 		}
 	}
+
+	public List<HrResource> getLaboursForSpecialization(String spec) throws Exception {
+		try {
+			return hrRepository.getLaboursForSpecialization(spec);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 }

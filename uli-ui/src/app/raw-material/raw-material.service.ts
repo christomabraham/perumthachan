@@ -39,7 +39,7 @@ export class RawMaterialService {
       .map(response => { return response.json(); })
       .catch(error => { return this.appSharedService.handleErrorObservable(error, 'RawMaterialService', 'getRawMaterialStock') })
   }
-  public getCatagorizedStock(subCategoryId:string): Observable<any> {
+  public getCatagorizedStock(subCategoryId: string): Observable<any> {
     return this.http.get(`http://localhost:8080/chuttika/rawmaterials/getCatagorizedStock?subCategoryId=${subCategoryId}`)
       .map(response => { return response.json(); })
       .catch(error => { return this.appSharedService.handleErrorObservable(error, 'RawMaterialService', 'getCatagorizedStock') })
@@ -70,4 +70,10 @@ export class RawMaterialService {
       .map(response => { return response.json(); })
       .catch(error => { return this.appSharedService.handleErrorObservable(error, 'RawMaterialService', 'addToHRStock') })
   }
+  public getLaboursForSpecialization(spec: string): Observable<any> {
+    return this.http.get(`http://localhost:8080/chuttika/rawmaterials/getLaboursForSpecialization?spec=${spec}`)
+      .map(response => { return response.json(); })
+      .catch(error => { return this.appSharedService.handleErrorObservable(error, 'RawMaterialService', 'getLaboursForSpecialization') })
+  }
+
 }

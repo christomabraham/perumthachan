@@ -1,0 +1,27 @@
+.buttonStyle{
+    border:1px solid white;
+    border-radius: 5px;
+    padding:5px;
+}
+.buttonStyle:hover {
+    transform: scale(1.1); 
+}
+/*.form-group {
+     padding-bottom: 0px!important; 
+     margin: 0px!important;
+}*/
+.form-group.required .control-label:after { 
+    content:"*";
+    color:red;
+ }
+ .sub{
+     background-color: lightyellow;
+ }
+ .nav-tabss {
+    background: #999999!important;
+ }
+ .form-groupp {
+     padding-bottom: 0px!important;
+     margin: 0 0 0 0!important;
+     margin-bottom: 0px!important;
+}

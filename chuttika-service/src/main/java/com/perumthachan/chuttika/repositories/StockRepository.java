@@ -15,4 +15,8 @@ public interface StockRepository extends CrudRepository<Stock, Long> {
 	
 	@Query("SELECT t FROM Stock t WHERE t.subcategory.id=:subCategoryId ")
 	List<Stock> getCategorizedStock(@Param("subCategoryId") int subCategoryId);
+	
+	
+	@Query("SELECT t FROM Stock t WHERE t.id=:id ")
+	Stock getStock(@Param("id") int id);
 }

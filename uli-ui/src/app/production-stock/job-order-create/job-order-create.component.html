@@ -3,306 +3,408 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
+
+
           <div class="card-header" data-background-color="red">
             <h4 class="title">Add/Edit Job Order</h4>
             <p class="category">Enter details of Job Order</p>
           </div>
           <div class="card-content">
             <form>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Order No</label>
-                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.orderNumber">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Item Name</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.itemName">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group form-black ">
-                    <label class="control-label">No of Units</label>
-                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.quantity">
-                  </div>
-                </div>
+              <tabset #staticTabs>
+                <tab heading="Job Order">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Order No</label>
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.orderNumber">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Item Name</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.itemName">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <label class="control-label">No of Units</label>
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.quantity">
+                      </div>
+                    </div>
 
-                <div class="col-md-4">
-                  <div class="form-group form-black">
-                    <label class="control-label">Item Description</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.description">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group form-black">
-                    <label class="control-label">Wood Type</label>
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;" [(ngModel)]="selectedOrder.woodType">
-                      <ng-container *ngFor="let category of woodTypes">
-                        <option *ngIf="selectedOrder.wood_type==category.type" selected [value]="category.type">{{category.type}}</option>
-                        <option *ngIf="selectedOrder.wood_type!=category.type" [value]="category.type">{{category.type}}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Order Date</label>
-                    <ng-container *ngIf="selectedOrder.orderDate==''">
-                      <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.orderDate  | date:'MM/dd/yyyy'"
-                        (ngModelChange)="selectedOrder.orderDate=$event">
-                    </ng-container>
-                    <ng-container *ngIf="selectedOrder.orderDate!=''">
-                      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.orderDate  | date:'MM/dd/yyyy'"
-                        (ngModelChange)="selectedOrder.orderDate=$event" readonly>
-                    </ng-container>
-
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group form-black">
-                    <label class="control-label">Delivery Date</label>
-                    <ng-container *ngIf="selectedOrder.deliveryDate==''">
-                      <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.deliveryDate  | date:'MM/dd/yyyy'"
-                        (ngModelChange)="selectedOrder.deliveryDate=$event">
-                    </ng-container>
-                    <ng-container *ngIf="selectedOrder.deliveryDate!=''">
-                      <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.deliveryDate  | date:'MM/dd/yyyy'"
-                        (ngModelChange)="selectedOrder.deliveryDate=$event" readonly>
-                      <i class="material-icons md-18" style="padding:5px" (click)="selectedOrder.deliveryDate=''">edit</i>
-                    </ng-container>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Comments</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.comments">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Expected Cost</label>
-                    <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.expectedCost">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group form-black">
-                    <label class="control-label">Advance Received&nbsp;&nbsp;
-                      <a (click)="openPaymentHistory(paymentHistory)">Payment History</a>
-                    </label>
-                    <input type="number" class="form-control" value={{getTotalAdvanceReceived()}} readonly>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group form-black">
-                    <label class="control-label">Order Status</label>
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;" [(ngModel)]="selectedOrder.orderStatus">
-                      <ng-container *ngFor="let status of orderStatus">
-                        <option *ngIf="selectedOrder.wood_type==status.type" selected [value]="status.type">{{status.type}}</option>
-                        <option *ngIf="selectedOrder.wood_type!=status.type" [value]="status.type">{{status.type}}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card sub">
-                    <h4 class="title">Client Details</h4>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group form-black required ">
-                    <label class="control-label">Client Name</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientName" required="required">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Contact No</label>
-                    <input type="tel" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientMobile">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Address</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientAddress">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card sub">
-                    <h4 class="title">Raw Materials Consumed</h4>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-2">
-                  <div class="form-group form-black required ">
-                    <label class="control-label">Raw Material</label>
-                    <select class="form-control" style="width:100%;background-color:grey;" (change)="getSubCategories($event)" [(ngModel)]="rawmaterial.categoryId"
-                      [ngModelOptions]="{standalone: true}">
-                      <ng-container *ngFor="let category of basicCategories">
-                        <option [value]="category.id">{{category.name}}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Sub Category</label>
-                    <select class="form-control" style="width:100%;background-color:grey;" (change)="getStock($event)" [(ngModel)]="rawmaterial.subCategoryId"
-                      [ngModelOptions]="{standalone: true}">
-                      <ng-container *ngFor="let category of subCategories">
-                        <option [value]="category.id">{{category.name}}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Stock</label>
-                    <select class="form-control" style="width:100%;background-color:grey;" [(ngModel)]="rawmaterial.stock" [ngModelOptions]="{standalone: true}"
-                      (change)="stockSelected($event)">
-                      <ng-container *ngFor="let category of stock">
-                        <option [value]="category.id">{{getStockLabel(category)}}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Availablity</label>
-                    <input type="text" class="form-control" readonly [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.availablity">
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Requirement</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.requirement">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group form-black ">
-                      <label class="control-label">Date</label>
-                      <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.createdOn">
+                    <div class="col-md-4">
+                      <div class="form-group form-black">
+                        <label class="control-label">Item Description</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.description">
+                      </div>
                     </div>
                   </div>
-                <div class="col-md-2">
-                  <div class="form-group form-black " style="text-align: center;">
-                    <button class="btn btn-info btn-xs" style="margin:0px!important;" [disabled]="isDisabledAddtoProductionStock()" (click)="addRawMaterials()">Add</button>
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group form-black">
+                        <label class="control-label">Wood Type</label>
+                        <select class="form-control dropDown" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.woodType">
+                          <ng-container *ngFor="let category of woodTypes">
+                            <option *ngIf="selectedOrder.wood_type==category.type" selected [value]="category.type">{{category.type}}</option>
+                            <option *ngIf="selectedOrder.wood_type!=category.type" [value]="category.type">{{category.type}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Order Date</label>
+                        <ng-container *ngIf="selectedOrder.orderDate==''">
+                          <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.orderDate  | date:'MM/dd/yyyy'"
+                            (ngModelChange)="selectedOrder.orderDate=$event">
+                        </ng-container>
+                        <ng-container *ngIf="selectedOrder.orderDate!=''">
+                          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.orderDate  | date:'MM/dd/yyyy'"
+                            (ngModelChange)="selectedOrder.orderDate=$event" readonly>
+                        </ng-container>
+
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black">
+                        <label class="control-label">Delivery Date</label>
+                        <ng-container *ngIf="selectedOrder.deliveryDate==''">
+                          <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.deliveryDate  | date:'MM/dd/yyyy'"
+                            (ngModelChange)="selectedOrder.deliveryDate=$event">
+                        </ng-container>
+                        <ng-container *ngIf="selectedOrder.deliveryDate!=''">
+                          <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [ngModel]="selectedOrder.deliveryDate  | date:'MM/dd/yyyy'"
+                            (ngModelChange)="selectedOrder.deliveryDate=$event" readonly>
+                          <i class="material-icons md-18" style="padding:5px" (click)="selectedOrder.deliveryDate=''">edit</i>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Comments</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.comments">
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="row" *ngIf="rawMaterials.length>0">
-                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Expected Cost</label>
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.expectedCost">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black">
+                        <label class="control-label">Advance Received&nbsp;&nbsp;
+                          <a (click)="openPaymentHistory(paymentHistory)">Payment History</a>
+                        </label>
+                        <input type="number" class="form-control" value={{getTotalAdvanceReceived()}} readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black">
+                        <label class="control-label">Order Status</label>
+                        <select class="form-control dropDown" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.orderStatus">
+                          <ng-container *ngFor="let status of orderStatus">
+                            <option *ngIf="selectedOrder.wood_type==status.type" selected [value]="status.type">{{status.type}}</option>
+                            <option *ngIf="selectedOrder.wood_type!=status.type" [value]="status.type">{{status.type}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="row">
                     <div class="col-md-12">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Category</th>
-                            <th>SubCategory</th>
-                            <th>Item</th>
-                            <th>Quantity</th>
-                            <th>Date</th>
-                            <th>Edit</th>
-                          </tr>
-                        </thead>
-                        <tbody *ngFor="let rawMaterial of rawMaterials;let i=index;">
-                          <tr>
-                            <td>{{rawMaterial.categoryLabel}}</td>
-                            <td>{{rawMaterial.subCategoryLabel}}</td>
-                            <td>{{rawMaterial.stockLabel}}</td>
-                            <td>{{rawMaterial.requirement}}</td>
-                            <td>{{rawMaterial.createdOn| date:'MM/dd/yyyy'}}</td>
-                            <td>
-                              <button class="btn btn-danger btn-xs"  *ngIf="rawMaterial.productionStockId ==''" (click)="deleteFromRawMaterials(rawMaterial)">X</button>
-                            </td>
-                          </tr>
-
-                        </tbody>
-                      </table>
+                      <div class="card sub">
+                        <h4 class="title">Client Details</h4>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <!--<div class="row">
-                <div class="col-md-12">
-                  <div class="card sub">
-                    <h4 class="title">Add Labour</h4>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group form-black required ">
+                        <label class="control-label">Client Name</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientName" required="required">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Contact No</label>
+                        <input type="tel" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientMobile">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Address</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientAddress">
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <div class="form-group form-black required ">
-                    <label class="control-label">Raw Material</label>
-                    <select class="form-control"  style="width:100%;background-color:grey;" (change)="getSubCategories($event)" [(ngModel)]="stockElement.categoryid"
-                      [ngModelOptions]="{standalone: true}">
-                      <ng-container *ngFor="let category of basicCategories">
-                          <option [value]="">Select</option>
-                        <option [value]="category.id">{{category.name}}</option>
-                      </ng-container>
-                    </select>
+                </tab>
+                <tab heading="Raw Materials">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card sub">
+                        <h4 class="title">Raw Materials Consumed</h4>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Sub Category</label>
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;" [(ngModel)]="selectedOrder.orderStatus">
-                      <ng-container *ngFor="let status of orderStatus">
-                        <option *ngIf="selectedOrder.wood_type==status.type" selected [value]="status.type">{{status.type}}</option>
-                        <option *ngIf="selectedOrder.wood_type!=status.type" [value]="status.type">{{status.type}}</option>
-                      </ng-container>
-                    </select>
+
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="form-group form-black required ">
+                        <label class="control-label">Raw Material</label>
+                        <select class="form-control dropDown" (change)="getSubCategories($event)" [(ngModel)]="rawmaterial.categoryId" [ngModelOptions]="{standalone: true}">
+                          <ng-container *ngFor="let category of basicCategories">
+                            <option [value]="category.id">{{category.name}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Sub Category</label>
+                        <select class="form-control dropDown" (change)="getStock($event)" [(ngModel)]="rawmaterial.subCategoryId" [ngModelOptions]="{standalone: true}">
+                          <ng-container *ngFor="let category of subCategories">
+                            <option [value]="category.id">{{category.name}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Stock</label>
+                        <select class="form-control dropDown" [(ngModel)]="rawmaterial.stock" [ngModelOptions]="{standalone: true}" (change)="stockSelected($event)">
+                          <ng-container *ngFor="let category of stock">
+                            <option [value]="category.id">{{getStockLabel(category)}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Availablity</label>
+                        <input type="text" class="form-control" readonly [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.availablity">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Date</label>
+                        <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.createdOn">
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group form-black required">
-                    <label class="control-label">Stock</label>
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;" [(ngModel)]="selectedOrder.orderStatus">
-                      <ng-container *ngFor="let status of orderStatus">
-                        <option *ngIf="selectedOrder.wood_type==status.type" selected [value]="status.type">{{status.type}}</option>
-                        <option *ngIf="selectedOrder.wood_type!=status.type" [value]="status.type">{{status.type}}</option>
-                      </ng-container>
-                    </select>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="form-group form-black required ">
+                        <label class="control-label">Requirement</label>
+                        <input type="text" class="form-control" (change)="calculatePrice()" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.requirement">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Price</label>
+                        <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.price">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Addittional Amt(if any)</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.additionalAmt">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Comments</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="rawmaterial.comments">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group form-black " style="text-align: center;">
+                        <button class="btn btn-info btn-xs" style="margin:0px!important;" [disabled]="isDisabledAddtoProductionStock()" (click)="addRawMaterials()">Add</button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-1">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Availablity</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientAddress">
+                  <div class="row" *ngIf="selectedOrder?.productionStock?.length>0">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Category</th>
+                                <th>SubCategory</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Date</th>
+                                <th>Edit</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let rawMaterial of selectedOrder.productionStock;let i=index;">
+                              <tr>
+                                <td>{{rawMaterial.categoryLabel}}</td>
+                                <td>{{rawMaterial.subCategoryLabel}}</td>
+                                <td>{{rawMaterial.stockLabel}}</td>
+                                <td>{{rawMaterial.requirement}}</td>
+                                <td>{{rawMaterial.createdOn| date:'MM/dd/yyyy'}}</td>
+                                <td>
+                                  <button class="btn btn-danger btn-xs" *ngIf="rawMaterial.productionStockId ==''" (click)="deleteFromRawMaterials(rawMaterial)">X</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-1">
-                  <div class="form-group form-black ">
-                    <label class="control-label">Needed</label>
-                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedOrder.clientAddress">
+                </tab>
+                <tab heading="Labour">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card sub">
+                        <h4 class="title">Add Labour</h4>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-1">
-                  <div class="form-group form-black ">
-                    <button class="btn">Add</button>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group form-black required ">
+                        <label class="control-label">Specialization</label>
+                        <select class="form-control dropDown" (change)="getLabours($event)" [(ngModel)]="labour.specialization" [ngModelOptions]="{standalone: true}">
+                          <ng-container *ngFor="let spec of labourSpecialization">
+                            <option [value]="spec.type">{{spec.type}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Labour</label>
+                        <select class="form-control dropDown" [ngModelOptions]="{standalone: true}" (change)="labourSelected($event)" [(ngModel)]="labour.labourId">
+                          <ng-container *ngFor="let labour of labours">
+                            <option [value]="labour.id">{{labour.name}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Work</label>
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="labour.comments"> &nbsp;&nbsp;
+
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Basic Wage</label>
+                        <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="labour.basicWage">
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>-->
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Date</label>
+                        <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="labour.date">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black required">
+                        <label class="control-label">Start Time</label>
+                        <select class="form-control " style="width:70px;background-color: burlywood" (change)="calculateDuration()" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="labour.startTime.hour">
+                          <ng-container *ngFor="let hour of hours">
+                            <option [value]="hour.value">{{hour.label}}</option>
+                          </ng-container>
+                        </select>
+                        :
+                        <select class="form-control " style="width:70px;background-color: burlywood" (change)="calculateDuration()" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="labour.startTime.minute">
+                          <ng-container *ngFor="let minute of minutes">
+                            <option [value]="minute.value">{{minute.label}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black required">
+                        <label class="control-label">End Time</label>
+                        <select class="form-control " style="width:70px;background-color: burlywood" (change)="calculateDuration()" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="labour.endTime.hour">
+                          <ng-container *ngFor="let hour of hours">
+                            <option [value]="hour.value">{{hour.label}}</option>
+                          </ng-container>
+                        </select>
+                        :
+                        <select class="form-control " style="width:70px;background-color: burlywood" (change)="calculateDuration()" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="labour.endTime.minute">
+                          <ng-container *ngFor="let minute of minutes">
+                            <option [value]="minute.value">{{minute.label}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <label class="control-label">Duration</label>
+                        <input type="text" class="form-control" [value]="getDuration()">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-black ">
+                          <label class="control-label">Wage</label>
+                          <input type="text" readonly class="form-control" [value]="labour.wageForDay">
+                        </div>
+                      </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-black ">
+                        <button class="btn btn-info" [disabled]="isDisabledAddLabour()" (click)="addLabour()">Add</button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row" *ngIf="selectedOrder?.labours?.length>0">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Labour</th>
+                                  <th>Specialization</th>
+                                  <th>Work</th>
+                                  <th>Wage</th>
+                                  <th>Duration</th>
+                                  <th>Edit</th>
+                                </tr>
+                              </thead>
+                              <tbody *ngFor="let labour of selectedOrder.labours;let i=index;">
+                                <tr>
+                                  <td>{{labour.labourName}}</td>
+                                  <td>{{labour.specialization}}</td>
+                                  <td>{{labour.comments}}</td>
+                                  <td>{{labour.wageForDay}}</td>
+                                  <td>{{labour.duration.hour}} H : {{labour.duration.minute}} Min</td>
+                                  <td>
+                                    <button class="btn btn-danger btn-xs" *ngIf="labour.labourStockId ==''" (click)="deleteFromLabours(labour)">X</button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </tab>
+              </tabset>
+
               <button type="submit" class="btn btn-danger pull-left" (click)="closeModal()">Cancel</button>
               <button type="submit" class="btn btn-danger pull-right" (click)="saveJobCard()" [disabled]="disabled()">Save</button>
               <div class="clearfix"></div>
             </form>
-
           </div>
         </div>
       </div>
@@ -335,7 +437,7 @@
       <div class="col-md-2">
         <div class="form-group form-black ">
           <label class="control-label"> Method</label>
-          <select class="form-control" [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;" [(ngModel)]="payment.method">
+          <select class="form-control dropDown" [ngModelOptions]="{standalone: true}" [(ngModel)]="payment.method">
             <option value="Cash">Cash</option>
             <option value="Cheque">Cheque</option>
             <option value="DD">DD</option>

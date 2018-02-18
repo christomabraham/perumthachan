@@ -42,6 +42,16 @@ public class JobOrder {
 	@JoinColumn(name="orderid",nullable=false)
 	@JsonManagedReference
 	private List<JobOrderPayment> payments = new ArrayList<JobOrderPayment>();
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="orderid",nullable=false)
+	@JsonManagedReference
+	private List<ProductionStock> productionStock = new ArrayList<ProductionStock>();
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="orderid",nullable=false)
+	@JsonManagedReference
+	private List<ProductionLabour> labours = new ArrayList<ProductionLabour>();
 
 	public int getId() {
 		return id;
@@ -177,6 +187,23 @@ public class JobOrder {
 
 	public List<JobOrderPayment> getPayments() {
 		return this.payments;
+	}
+
+	
+	public List<ProductionStock> getProductionStock() {
+		return productionStock;
+	}
+
+	public void setProductionStock(List<ProductionStock> productionStock) {
+		this.productionStock = productionStock;
+	}
+	
+	public List<ProductionLabour> getLabours() {
+		return labours;
+	}
+
+	public void setLabours(List<ProductionLabour> labours) {
+		this.labours = labours;
 	}
 
 	@Override

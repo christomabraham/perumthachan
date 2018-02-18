@@ -67,7 +67,7 @@
                         <div class="col-md-12">
                             <div class="form-group form-black required">
                                 <label class="control-label">Category</label>
-                                <select [ngModelOptions]="{standalone: true}" style="width:100%;background-color:grey;"  [(ngModel)]="subCategoryElement.category.id" (change)="subCategoryChange($event)">
+                                <select [ngModelOptions]="{standalone: true}" class="dropDown"  [(ngModel)]="subCategoryElement.category.id" (change)="subCategoryChange($event)">
                                         <ng-container *ngFor="let category of basicCategories">
                                             <option *ngIf="subCategoryElement.category.id==category.id" selected [value]="category.id">{{category.name}}</option>
                                             <option *ngIf="subCategoryElement.category.id!=category.id" [value]="category.id">{{category.name}}</option>

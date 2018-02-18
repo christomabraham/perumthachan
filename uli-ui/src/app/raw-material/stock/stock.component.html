@@ -56,7 +56,7 @@
             <div class="col-md-6">
               <div class="form-group form-black required">
                 <label class="control-label">Category</label>
-                <select style="width:100%;background-color:grey;" (change)="getSubCategories($event)" [(ngModel)]="stockElement.categoryid" [ngModelOptions]="{standalone: true}">
+                <select class="dropDown" (change)="getSubCategories($event)" [(ngModel)]="stockElement.categoryid" [ngModelOptions]="{standalone: true}">
                   <ng-container *ngFor="let category of basicCategories">
                     <option *ngIf="stockElement.categoryId==category.id" selected [value]="category.id">{{category.name}}</option>
                     <option *ngIf="stockElement.categoryId!=category.id" [value]="category.id">{{category.name}}</option>
@@ -67,7 +67,7 @@
             <div class="col-md-6">
               <div class="form-group form-black required">
                 <label class="control-label">Sub Category</label>
-                <select style="width:100%;background-color:grey;" [(ngModel)]="stockElement.subcategory.id" [ngModelOptions]="{standalone: true}">
+                <select class="dropDown" [(ngModel)]="stockElement.subcategory.id" [ngModelOptions]="{standalone: true}">
                   <ng-container *ngFor="let category of subCategories">
                     <option *ngIf="stockElement.subcategory.id==category.id" selected [value]="category.id">{{category.name}}</option>
                     <option *ngIf="stockElement.subcategory.id!=category.id" [value]="category.id">{{category.name}}</option>

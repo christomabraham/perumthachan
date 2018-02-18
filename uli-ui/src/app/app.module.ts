@@ -16,6 +16,7 @@ import { RawMaterialComponent } from './raw-material/raw-material.component';
 import { RawMaterialService } from './raw-material/raw-material.service';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap';
 import { SubCategoryComponent } from './raw-material/sub-category/sub-category.component';
 import { StockComponent } from './raw-material/stock/stock.component';
 import { StockFilterPipe } from './raw-material/stock/stock.filter';
@@ -46,7 +47,8 @@ import { JobOrderCreateComponent } from './production-stock/job-order-create/job
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TabsModule.forRoot()
   ],
   providers: [AppSharedService, RawMaterialService, JobOrderService],
   bootstrap: [AppComponent]

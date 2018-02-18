@@ -153,6 +153,17 @@ public class RawMaterialController {
 
 	}
 	
+	@RequestMapping(value = "/getLaboursForSpecialization", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<HrResource> getLaboursForSpecialization(@RequestParam String spec) throws Exception {
+		try {
+			return rawMaterialService.getLaboursForSpecialization(spec);
+		} catch (Exception e) {
+			logger.error("****Exception in getLaboursForSpecialization() " + e.getMessage());
+			throw e;
+		}
+
+	}
+	
 	private boolean isValid(String data){
 		return !(data==null || data.trim().equals(""));
 		
